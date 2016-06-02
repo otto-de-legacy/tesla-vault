@@ -7,7 +7,6 @@
         :url  "https://github.com/otto-de/tesla-vault"}
   :dependencies [[org.clojure/clojure "1.8.0"]
                  [clj-http "2.2.0"]
-                 [environ "1.0.2"]
+                 [environ "1.0.3"]
                  [org.clojure/data.json "0.2.6"]
-                 ;[org.clojure/tools.logging "0.3.1"]
-                 ])
+                 [org.clojure/tools.logging "0.3.1"]])

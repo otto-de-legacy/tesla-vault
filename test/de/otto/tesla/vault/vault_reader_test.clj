@@ -11,11 +11,11 @@
                   http/get (fn [url stuff]
                              (reset! request-data {:url url :stuff stuff})
                              {:body "{\"data\":{\"my-key\":\"my-var-value\"}}"})]
-      (let [secret (reader/read-secret "/path/to/secret" :my-key)]
+      (let [secret (reader/read-secret ["/path/to/secret" :my-key])]
         (is (= "my-var-value" secret))
         (is (= "some-url/v1//path/to/secret" (:url @request-data)))
         (is (= {:accept  :json
                 :as      :json
                 :headers {"X-Vault-Token" "some-token"}} (:stuff @request-data)))
-        (let [secret (reader/read-secret "/path/to/secret")]
+        (let [secret (reader/read-secret ["/path/to/secret"])]
           (is (= {:my-key "my-var-value"} secret)))))))
