@@ -1,7 +1,7 @@
 (ns de.otto.tesla.vault.vault-reader-test
   (:require [environ.core :as env]
             [clojure.test :refer :all]
-            [de.otto.tesla.vault.vault-reader :as reader]
+            [de.otto.tesla.vault.vault_reader :as reader]
             [clj-http.client :as http]))
 
 (deftest ^:unit should-call-vault-and-parse-json

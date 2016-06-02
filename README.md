@@ -4,7 +4,6 @@ A Clojure library designed to enhance your edn config with environment variables
 
 ## Usage
 
-
 If you want to use secrets from vault in your environment variables:
 
 ```edn
@@ -18,14 +17,15 @@ For this to work two environment variables need to be present:
 * `$VAULT_ADDR`:the url where vault can be found (e.g.  _https://vault.yourdomain.com_)
 * `$VAULT_TOKEN`: a valid token for vault.
 
+And you have to require the reader-function like this:
+```
+(:require
+[de.otto.tesla.vault.vault_reader :only [read-secret]])
+```
+
 ## Initial Contributors
 
-Christian Stamm, Carl Düvel
-
-
+Christian Stamm, Florian Weyandt, Carl Düvel
 
 ## License
-
-Copyright © 2016 FIXME
-
-Distributed under the Apache License.
+Apache License.
