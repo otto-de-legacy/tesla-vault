@@ -1,10 +1,13 @@
 # tesla-vault
 
-A Clojure library designed to enhance your edn config with environment variables and secrets stored in vault.
+A Clojure library designed to enhance your edn config with secrets stored in vault.
+
+[![Clojars Project](http://clojars.org/de.otto/tesla-vault/latest-version.svg)](http://clojars.org/de.otto/tesla-vault)
+
+[![Build Status](https://travis-ci.org/otto-de/tesla-vault.svg)](https://travis-ci.org/otto-de/tesla-vault)
+
 
 ## Usage
-
-If you want to use secrets from vault in your environment variables:
 
 ```edn
 {
@@ -14,6 +17,7 @@ If you want to use secrets from vault in your environment variables:
 ```
 
 For this to work two environment variables need to be present:
+
 * `$VAULT_ADDR`:the url where vault can be found (e.g.  _https://vault.yourdomain.com_)
 * `$VAULT_TOKEN`: a valid token for vault.
 
