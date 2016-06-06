@@ -13,9 +13,7 @@
                             :accept  :json
                             :as      :json})
         body (json/read-str (:body response) :key-fn keyword)]
-    (log/infof "Just read %s which is valid for %d seconds" vault-path (:lease-duration body))
+    (log/infof "Just read %s which is valid for %d seconds" vault-path (:lease_duration body))
     (if key
       (get (:data body) key)
       (:data body))))
-
-
