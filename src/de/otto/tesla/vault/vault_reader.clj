@@ -1,14 +1,11 @@
 (ns de.otto.tesla.vault.vault_reader
-  (:require
-    [clojure.tools.logging :as log]
-    [clj-http.client :as http]
-    [clojure.data.json :as json]
-    [environ.core :as env]))
+  (:require [clojure.tools.logging :as log]
+            [clj-http.client :as http]
+            [clojure.data.json :as json]
+            [environ.core :as env]))
 
-(defn read-secret [[vault-path key]]
-  (let [server (env/env :vault-addr)
-        token (env/env :vault-token)
-        response (http/get (str server "/v1/" vault-path)
+(defn- query-vault [token server vault-path key]
+  (let [response (http/get (str server "/v1/" vault-path)
                            {:headers {"X-Vault-Token" token}
                             :accept  :json
                             :as      :json})
@@ -17,3 +14,12 @@
     (if key
       (get (:data body) key)
       (:data body))))
+
+(defn read-secret [[vault-path key]]
+  (let [server (env/env :vault-addr)
+        token (env/env :vault-token)]
+    (if token
+      (query-vault token server vault-path key)
+      (do
+        (log/warn "No vault token!")
+        ""))))
