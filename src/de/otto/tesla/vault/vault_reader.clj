@@ -19,7 +19,9 @@
   (let [server (env/env :vault-addr)
         token (env/env :vault-token)]
     (if token
-      (query-vault token server vault-path key)
+      (if-let [secret (query-vault token server vault-path key)]
+        secret
+        (throw (IllegalStateException. (str vault-path ":" key " not found in vault!"))))
       (do
         (log/warn "No vault token!")
         ""))))

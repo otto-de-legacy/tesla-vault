@@ -10,7 +10,8 @@
                            :vault-addr  "some-url"}
                   http/get (fn [url stuff]
                              (reset! request-data {:url url :stuff stuff})
-                             {:body "{\"data\":{\"my-key\":\"my-var-value\"}}"})]
+                             {:status 200
+                              :body "{\"data\":{\"my-key\":\"my-var-value\"}}"})]
       (testing "it gets the secret from vault"
 
         (let [secret (reader/read-secret ["/path/to/secret" :my-key])]
@@ -22,6 +23,19 @@
       (testing "it gets the whole hash if no key given"
         (is (= {:my-key "my-var-value"} 
                (reader/read-secret ["/path/to/secret"])))))))
+
+(deftest ^:unit exceptions-on-missing-data
+  (testing "it throws an exception if the key is missing"
+    (let [request-data (atom nil)]
+      (with-redefs [env/env {:vault-token "some-token"
+                             :vault-addr  "some-url"}
+                    http/get (fn [url stuff]
+                               (reset! request-data {:url url :stuff stuff})
+                               {:status 200
+                                :body "{\"data\":{\"other-key\":\"my-var-value\"}}"})]
+        (is (thrown-with-msg? IllegalStateException
+                              #"not found in vault"
+                              (reader/read-secret ["/path/to/secret" :missing-key])))))))
 
 (deftest ^:unit without-token-test
   (with-redefs [env/env {:vault-token nil}]
