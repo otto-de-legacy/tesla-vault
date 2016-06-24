@@ -18,7 +18,6 @@
           (is (= "my-var-value" secret))
           (is (= "some-url/v1//path/to/secret" (:url @request-data)))
           (is (= {:accept  :json
-                  :as      :json
                   :headers {"X-Vault-Token" "some-token"}} (:stuff @request-data)))))
       (testing "it gets the whole hash if no key given"
         (is (= {:my-key "my-var-value"} 
