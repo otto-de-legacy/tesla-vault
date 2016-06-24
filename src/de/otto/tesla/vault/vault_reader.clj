@@ -7,8 +7,7 @@
 (defn- query-vault [token server vault-path key]
   (let [response (http/get (str server "/v1/" vault-path)
                            {:headers {"X-Vault-Token" token}
-                            :accept  :json
-                            :as      :json})
+                            :accept  :json})
         body (json/read-str (:body response) :key-fn keyword)]
     (log/infof "Just read %s which is valid for %d seconds" vault-path (:lease_duration body))
     (if key
