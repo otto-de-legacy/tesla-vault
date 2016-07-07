@@ -11,7 +11,7 @@
                   http/get (fn [url stuff]
                              (reset! request-data {:url url :stuff stuff})
                              {:status 200
-                              :body "{\"data\":{\"my-key\":\"my-var-value\"}}"})]
+                              :body   "{\"data\":{\"my-key\":\"my-var-value\"}}"})]
       (testing "it gets the secret from vault"
 
         (let [secret (reader/read-secret ["/path/to/secret" :my-key])]
@@ -20,7 +20,7 @@
           (is (= {:accept  :json
                   :headers {"X-Vault-Token" "some-token"}} (:stuff @request-data)))))
       (testing "it gets the whole hash if no key given"
-        (is (= {:my-key "my-var-value"} 
+        (is (= {:my-key "my-var-value"}
                (reader/read-secret ["/path/to/secret"])))))))
 
 (deftest ^:unit exceptions-on-missing-data
@@ -31,13 +31,17 @@
                     http/get (fn [url stuff]
                                (reset! request-data {:url url :stuff stuff})
                                {:status 200
-                                :body "{\"data\":{\"other-key\":\"my-var-value\"}}"})]
+                                :body   "{\"data\":{\"other-key\":\"my-var-value\"}}"})]
         (is (thrown-with-msg? IllegalStateException
                               #"not found in vault"
                               (reader/read-secret ["/path/to/secret" :missing-key])))))))
 
-(deftest ^:unit without-token-test
-  (with-redefs [env/env {:vault-token nil}]
-    (testing "it does not query vault without a token"
+(deftest ^:unit lacking-vault-config
+  (testing "if there is now token or addr the return value is an empty string so edn config can be read in tests w/o exceptions"
+    (with-redefs [env/env {:vault-addr  "some-url"}]
+      (is (= ""
+             (reader/read-secret ["/path/to/secret" :my-key]))))
+
+    (with-redefs [env/env {:vault-token "some-token"}]
       (is (= ""
              (reader/read-secret ["/path/to/secret" :my-key]))))))
