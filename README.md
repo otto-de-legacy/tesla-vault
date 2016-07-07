@@ -32,4 +32,4 @@ And you have to require the reader-function like this:
 Christian Stamm, Florian Weyandt, Carl Düvel
 
 ## License
-Apache License.
+Released under [Apache License 2.0](http://www.apache.org/licenses/LICENSE-2.0) license.
