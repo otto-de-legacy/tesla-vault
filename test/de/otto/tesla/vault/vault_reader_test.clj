@@ -12,19 +12,19 @@
                              (reset! request-data {:url url :stuff stuff})
                              {:status 200
                               :body   "{\"data\":{\"my-key\":\"my-var-value\"}}"})]
-      (testing "it gets the secret from vault"
+      (testing "Should fetch secret from vault."
 
         (let [secret (reader/read-secret ["/path/to/secret" :my-key])]
           (is (= "my-var-value" secret))
           (is (= "some-url/v1//path/to/secret" (:url @request-data)))
           (is (= {:accept  :json
                   :headers {"X-Vault-Token" "some-token"}} (:stuff @request-data)))))
-      (testing "it gets the whole hash if no key given"
+      (testing "fetch everything if no key is given"
         (is (= {:my-key "my-var-value"}
                (reader/read-secret ["/path/to/secret"])))))))
 
 (deftest ^:unit exceptions-on-missing-data
-  (testing "it throws an exception if the key is missing"
+  (testing "Should throw an exception if the key is not found in vault."
     (let [request-data (atom nil)]
       (with-redefs [env/env {:vault-token "some-token"
                              :vault-addr  "some-url"}
@@ -37,7 +37,7 @@
                               (reader/read-secret ["/path/to/secret" :missing-key])))))))
 
 (deftest ^:unit lacking-vault-config
-  (testing "if there is now token or addr the return value is an empty string so edn config can be read in tests w/o exceptions"
+  (testing "Should return an empty string if there is no token or addr so edn config can be read in tests w/o exceptions"
     (with-redefs [env/env {:vault-addr  "some-url"}]
       (is (= ""
              (reader/read-secret ["/path/to/secret" :my-key]))))
