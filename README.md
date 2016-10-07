@@ -5,6 +5,7 @@ A Clojure library designed to enhance your edn config with secrets stored in vau
 [![Clojars Project](http://clojars.org/de.otto/tesla-vault/latest-version.svg)](http://clojars.org/de.otto/tesla-vault)
 
 [![Build Status](https://travis-ci.org/otto-de/tesla-vault.svg)](https://travis-ci.org/otto-de/tesla-vault)
+[![Dependencies Status](http://jarkeeper.com/otto-de/tesla-vault/status.svg)](http://jarkeeper.com/otto-de/tesla-vault)
 
 
 ## Usage
