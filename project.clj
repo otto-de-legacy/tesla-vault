@@ -5,11 +5,10 @@
             :url  "http://www.eclipse.org/legal/epl-v10.html"}
   :scm {:name "git"
         :url  "https://github.com/otto-de/tesla-vault"}
-  :plugins [[lein-release "1.0.5"]]
+  :profiles {:dev {:plugins [[lein-release/lein-release "1.0.9"]]}}
   :lein-release {:scm :git
                  :deploy-via :shell
-                 :shell ["lein" "deploy" "clojars"]
-                 }
+                 :shell ["lein" "deploy" "clojars"]}
   :dependencies [[org.clojure/clojure "1.8.0"]
                  [clj-http "3.3.0"]
                  [environ "1.1.0"]
