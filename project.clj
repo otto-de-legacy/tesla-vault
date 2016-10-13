@@ -6,9 +6,7 @@
   :scm {:name "git"
         :url  "https://github.com/otto-de/tesla-vault"}
   :profiles {:dev {:plugins [[lein-release/lein-release "1.0.9"]]}}
-  :lein-release {:scm :git
-                 :deploy-via :shell
-                 :shell ["lein" "deploy" "clojars"]}
+  :lein-release {:deploy-via :clojars}
   :dependencies [[org.clojure/clojure "1.8.0"]
                  [clj-http "3.3.0"]
                  [environ "1.1.0"]
