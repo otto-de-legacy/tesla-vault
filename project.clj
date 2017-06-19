@@ -1,4 +1,4 @@
-(defproject de.otto/tesla-vault "1.0.2-SNAPSHOT"
+(defproject de.otto/tesla-vault "1.0.2"
   :description "Read vault secrets in your edn config"
   :url "https://github.com/otto-de/tesla-vault"
   :license {:name "Eclipse Public License"
