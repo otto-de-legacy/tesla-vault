@@ -18,7 +18,9 @@
           (is (= "my-var-value" secret))
           (is (= "some-url/v1//path/to/secret" (:url @request-data)))
           (is (= {:accept  :json
-                  :headers {"X-Vault-Token" "some-token"}} (:stuff @request-data)))))
+                  :headers {"X-Vault-Token" "some-token"}
+                  :throw-entire-message? true}
+                 (:stuff @request-data)))))
       (testing "fetch everything if no key is given"
         (is (= {:my-key "my-var-value"}
                (reader/read-secret ["/path/to/secret"])))))))
