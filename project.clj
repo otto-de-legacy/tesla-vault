@@ -8,7 +8,7 @@
   :profiles {:dev {:plugins [[lein-release/lein-release "1.0.9"]]}}
   :lein-release {:deploy-via :clojars}
   :dependencies [[org.clojure/clojure "1.8.0"]
-                 [clj-http "3.4.1"]
+                 [clj-http "3.6.1"]
                  [environ "1.1.0"]
                  [org.clojure/data.json "0.2.6"]
-                 [org.clojure/tools.logging "0.3.1"]])
+                 [org.clojure/tools.logging "0.4.0"]])
