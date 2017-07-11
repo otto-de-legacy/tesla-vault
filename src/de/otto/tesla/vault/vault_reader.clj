@@ -5,11 +5,12 @@
             [environ.core :as env]))
 
 (defn- query-vault [token server vault-path key]
+  (log/infof "Attempting to read %s" vault-path)
   (let [response (http/get (str server "/v1/" vault-path)
                            {:headers               {"X-Vault-Token" token}
                             :accept                :json
                             :throw-entire-message? true})
-        body     (json/read-str (:body response) :key-fn keyword)]
+        body (json/read-str (:body response) :key-fn keyword)]
     (log/infof "Just read %s which is valid for %d seconds" vault-path (:lease_duration body))
     (if key
       (get (:data body) key)
@@ -17,7 +18,7 @@
 
 (defn read-secret [[vault-path key]]
   (let [server (env/env :vault-addr)
-        token  (env/env :vault-token)]
+        token (env/env :vault-token)]
     (if (and token server)
       (if-let [secret (query-vault token server vault-path key)]
         secret
